@@ -20,7 +20,6 @@ import { SignupSchema } from "./signupSchema";
 import { notificationService } from "../../utils/notifications";
 
 export default function SignUpPage() {
-
   const navigate = useNavigate();
   const {
     register,
@@ -63,130 +62,360 @@ export default function SignUpPage() {
   };
 
   return (
-    <Paper bg="linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%)">
-      <Center h="100vh">
-        <Box pos="relative">
-          {/* Circular Return Button */}
-          <Button
-            pos="absolute"
-            component={Link}
-            to={"/"}
-            top={5}
-            left={-20}
-            w={50}
-            h={50}
-            radius="xl"
-            bg="#FFFFFF"
-            c="#EF4444"
-            p={0}
-          >
-            <Text size="xl" fw={600} ml="10" c="#EF4444">
-              ←
-            </Text>
-          </Button>
+    <>
+      <Paper 
+        bg="linear-gradient(135deg, #FFF1F2 0%, #FFE4E6 100%)" 
+        style={{ 
+          minHeight: '100vh', 
+          position: 'relative', 
+          overflow: 'hidden',
+          padding: '20px'
+        }}
+      >
+        {/* Static background elements */}
+        <Box
+          pos="absolute"
+          top="5%"
+          left="5%"
+          w={{ base: 80, sm: 100, md: 120 }}
+          h={{ base: 80, sm: 100, md: 120 }}
+          bg="rgba(239, 68, 68, 0.06)"
+          radius="50%"
+        />
+        <Box
+          pos="absolute"
+          top="15%"
+          right="8%"
+          w={{ base: 60, sm: 80, md: 100 }}
+          h={{ base: 60, sm: 80, md: 100 }}
+          bg="rgba(248, 113, 113, 0.08)"
+          radius="50%"
+        />
+        <Box
+          pos="absolute"
+          top="45%"
+          left="2%"
+          w={{ base: 50, sm: 70, md: 90 }}
+          h={{ base: 50, sm: 70, md: 90 }}
+          bg="rgba(239, 68, 68, 0.04)"
+          radius="50%"
+        />
+        <Box
+          pos="absolute"
+          bottom="20%"
+          right="15%"
+          w={{ base: 70, sm: 90, md: 110 }}
+          h={{ base: 70, sm: 90, md: 110 }}
+          bg="rgba(220, 38, 38, 0.05)"
+          radius="50%"
+        />
+        <Box
+          pos="absolute"
+          bottom="5%"
+          left="20%"
+          w={{ base: 40, sm: 60, md: 80 }}
+          h={{ base: 40, sm: 60, md: 80 }}
+          bg="rgba(239, 68, 68, 0.03)"
+          radius="50%"
+        />
 
-          <Paper bg="#EF4444" radius="3xl" shadow="xl" display="flex">
-            {/* Left side: Form */}
-            <Box p={48} flex={1}>
-              <Stack gap={28} w={400}>
-                {/* Header */}
-                <Stack gap={8}>
-                  <Text size="xl" fw={600} c="#FFFFFF">
+        <Center style={{ minHeight: '100vh' }}>
+          <Box 
+            pos="relative"
+            w="100%"
+            maw={480}
+          >
+            {/* Enhanced Return Button */}
+            <Button
+              pos="absolute"
+              component={Link}
+              to={"/"}
+              top={{ base: -15, sm: -10, md: 5 }}
+              left={{ base: -10, sm: -15, md: -20 }}
+              w={{ base: 50, sm: 55 }}
+              h={{ base: 50, sm: 55 }}
+              radius="xl"
+              bg="#FFFFFF"
+              c="#EF4444"
+              p={0}
+              style={{
+                boxShadow: '0 8px 25px rgba(239, 68, 68, 0.15)',
+                border: '2px solid rgba(239, 68, 68, 0.1)',
+                transition: 'all 0.3s ease',
+                zIndex: 10,
+                '&:hover': {
+                  transform: 'translateY(-2px)',
+                  boxShadow: '0 12px 35px rgba(239, 68, 68, 0.25)',
+                  backgroundColor: '#FEFEFE'
+                }
+              }}
+            >
+              <Text size="lg" fw={700} ml="2" c="#EF4444">
+                ←
+              </Text>
+            </Button>
+
+            <Paper 
+              bg="#EF4444" 
+              radius={{ base: "xl", sm: "2xl", md: "3xl" }}
+              shadow="xl" 
+              p={{ base: 30, sm: 40, md: 50 }}
+              style={{
+                boxShadow: '0 25px 60px rgba(239, 68, 68, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.05)',
+                backdropFilter: 'blur(10px)',
+                overflow: 'hidden',
+                position: 'relative'
+              }}
+            >
+              {/* Enhanced pattern overlay */}
+              <Box
+                pos="absolute"
+                top={0}
+                left={0}
+                right={0}
+                bottom={0}
+                style={{
+                  background: `
+                    radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.08) 0%, transparent 70%),
+                    radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.04) 0%, transparent 60%)
+                  `,
+                  pointerEvents: 'none'
+                }}
+              />
+              
+              <Stack gap={{ base: 25, sm: 30 }} w="100%" pos="relative">
+                {/* Enhanced Header with better mobile spacing */}
+                <Stack gap={12} ta="center">
+                  <Text 
+                    size="2rem"
+                    fw={700} 
+                    c="#FFFFFF"
+                    style={{
+                      letterSpacing: '-0.5px',
+                      textShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+                      fontSize: 'clamp(1.75rem, 4vw, 2.25rem)'
+                    }}
+                  >
                     Create Account
                   </Text>
-                  <Text size="sm" c="#FECACA">
-                    Join ActOnPov and start your journey
+                  <Text 
+                    size="md"
+                    c="#FECACA"
+                    fw={400}
+                    px={{ base: 10, sm: 0 }}
+                    style={{ 
+                      lineHeight: 1.5,
+                      textAlign: 'center',
+                      fontSize: 'clamp(0.875rem, 2.5vw, 1rem)'
+                    }}
+                  >
+                    Join ActOnPov and start your journey towards meaningful action
                   </Text>
                 </Stack>
 
-                {/* Form */}
+                {/* Form with enhanced mobile styling */}
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  <Stack gap={18}>
+                  <Stack gap={{ base: 18, sm: 20 }}>
                     <TextInput
-                      radius="full"
-                      size="md"
+                      radius="xl"
+                      size="lg"
                       placeholder="Full Name"
                       variant="filled"
                       bg="#FFFFFF"
                       c="#374151"
                       {...register("name")}
                       error={errors.name?.message}
+                      styles={{
+                        input: {
+                          border: '2px solid transparent',
+                          transition: 'all 0.3s ease',
+                          fontSize: '16px',
+                          fontWeight: 500,
+                          height: '50px',
+                          '&:focus': {
+                            borderColor: 'rgba(255, 255, 255, 0.9)',
+                            boxShadow: '0 0 0 3px rgba(255, 255, 255, 0.2)',
+                            transform: 'translateY(-1px)'
+                          },
+                          '&::placeholder': {
+                            color: '#9CA3AF',
+                            fontWeight: 400
+                          }
+                        },
+                        error: {
+                          color: '#FF0000',
+                          fontSize: '14px',
+                          fontWeight: 600
+                        }
+                      }}
                     />
+                    
                     <TextInput
-                      radius="full"
-                      size="md"
+                      radius="xl"
+                      size="lg"
                       placeholder="Email address"
                       variant="filled"
                       bg="#FFFFFF"
                       c="#374151"
                       {...register("email")}
                       error={errors.email?.message}
+                      styles={{
+                        input: {
+                          border: '2px solid transparent',
+                          transition: 'all 0.3s ease',
+                          fontSize: '16px',
+                          fontWeight: 500,
+                          height: '50px',
+                          '&:focus': {
+                            borderColor: 'rgba(255, 255, 255, 0.9)',
+                            boxShadow: '0 0 0 3px rgba(255, 255, 255, 0.2)',
+                            transform: 'translateY(-1px)'
+                          },
+                          '&::placeholder': {
+                            color: '#9CA3AF',
+                            fontWeight: 400
+                          }
+                        },
+                        error: {
+                          color: '#FF0000',
+                          fontSize: '14px',
+                          fontWeight: 600
+                        }
+                      }}
                     />
 
                     <PasswordInput
-                      radius="full"
-                      size="md"
+                      radius="xl"
+                      size="lg"
                       placeholder="Password"
                       variant="filled"
                       bg="#FFFFFF"
                       c="#374151"
                       {...register("password")}
                       error={errors.password?.message}
+                      styles={{
+                        input: {
+                          border: '2px solid transparent',
+                          transition: 'all 0.3s ease',
+                          fontSize: '16px',
+                          fontWeight: 500,
+                          height: '50px',
+                          '&:focus': {
+                            borderColor: 'rgba(255, 255, 255, 0.9)',
+                            boxShadow: '0 0 0 3px rgba(255, 255, 255, 0.2)',
+                            transform: 'translateY(-1px)'
+                          },
+                          '&::placeholder': {
+                            color: '#9CA3AF',
+                            fontWeight: 400
+                          }
+                        },
+                        error: {
+                          color: '#FF0000',
+                          fontSize: '14px',
+                          fontWeight: 600
+                        }
+                      }}
                     />
 
                     <PasswordInput
-                      radius="full"
-                      size="md"
+                      radius="xl"
+                      size="lg"
                       placeholder="Confirm Password"
                       variant="filled"
                       bg="#FFFFFF"
                       c="#374151"
                       {...register("confirmPassword")}
                       error={errors.confirmPassword?.message}
+                      styles={{
+                        input: {
+                          border: '2px solid transparent',
+                          transition: 'all 0.3s ease',
+                          fontSize: '16px',
+                          fontWeight: 500,
+                          height: '50px',
+                          '&:focus': {
+                            borderColor: 'rgba(255, 255, 255, 0.9)',
+                            boxShadow: '0 0 0 3px rgba(255, 255, 255, 0.2)',
+                            transform: 'translateY(-1px)'
+                          },
+                          '&::placeholder': {
+                            color: '#9CA3AF',
+                            fontWeight: 400
+                          }
+                        },
+                        error: {
+                          color: '#FF0000',
+                          fontSize: '14px',
+                          fontWeight: 600
+                        }
+                      }}
                     />
 
-                    {/* Buttons */}
-                    <Stack gap={16} mt={8}>
+                    {/* Enhanced Button with better mobile sizing */}
+                    <Stack gap={18} mt={{ base: 14, sm: 16 }}>
                       <Button
                         type="submit"
                         fullWidth
-                        h={48}
+                        h={{ base: 52, sm: 56 }}
                         radius="xl"
-                        bg="#DC2626"
+                        bg="#F43F5E" // More vibrant rose color
                         c="#FFFFFF"
                         loading={isSubmitting}
+                        fw={600}
+                        size="lg"
+                        styles={{
+                          root: {
+                            border: '2px solid #FECACA',
+                            transition: 'all 0.2s cubic-bezier(.4,0,.2,1)',
+                            position: 'relative',
+                            overflow: 'hidden',
+                            fontSize: '16px',
+                            backgroundColor: '#F43F5E',
+                            boxShadow: '0 4px 16px rgba(244,63,94,0.10)',
+                            cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                          },
+                          rootHovered: {
+                            backgroundColor: '#BE123C',
+                            boxShadow: '0 8px 32px rgba(244,63,94,0.25)',
+                            transform: 'translateY(-2px) scale(1.03)',
+                          },
+                          rootActive: {
+                            backgroundColor: '#F43F5E',
+                            transform: 'translateY(0px) scale(1)',
+                          }
+                        }}
                       >
                         Create Account
                       </Button>
-
-                      {/* <Button
-                        variant="filled"
-                        fullWidth
-                        h={48}
-                        leftSection={<FcGoogle size={18} />}
-                        radius="xl"
-                        bg="#FFFFFF"
-                        c="#374151"
-                        styles={{
-                          root: {
-                            "&:hover": {
-                              backgroundColor: "#F9FAFB",
-                            },
-                          },
-                        }}
-                      >
-                        Sign up with Google
-                      </Button> */}
                     </Stack>
 
-                    <Text size="sm" c="#FFFFFF" ta="center">
+                    <Text 
+                      size="md"
+                      c="#FFFFFF" 
+                      ta="center" 
+                      mt={8}
+                      px={{ base: 10, sm: 0 }}
+                      style={{
+                        fontSize: 'clamp(0.875rem, 2.5vw, 1rem)'
+                      }}
+                    >
                       Already have an account?{" "}
                       <Anchor
                         component={Link}
                         to={"/login"}
                         c="#FFFFFF"
-                        td="underline"
-                        fw={500}
+                        fw={600}
+                        style={{
+                          textDecoration: 'none',
+                          borderBottom: '2px solid rgba(255, 255, 255, 0.4)',
+                          paddingBottom: '2px',
+                          transition: 'all 0.3s ease',
+                          '&:hover': {
+                            borderBottomColor: '#FFFFFF',
+                            textShadow: '0 0 8px rgba(255, 255, 255, 0.4)'
+                          }
+                        }}
                       >
                         Sign in
                       </Anchor>
@@ -194,106 +423,15 @@ export default function SignUpPage() {
                   </Stack>
                 </form>
               </Stack>
-            </Box>
+            </Paper>
+          </Box>
+        </Center>
+      </Paper>
 
-            {/* Right side: Illustration */}
-            <Box
-              flex={1}
-              bg="#F87171"
-              display="flex"
-              style={{ alignItems: "center", justifyContent: "center" }}
-            >
-              {/* Simple geometric illustration using CSS */}
-              <Box pos="relative" w={350} h={350}>
-                {/* Main circle */}
-                <Box
-                  w={280}
-                  h={280}
-                  bg="rgba(255, 255, 255, 0.15)"
-                  radius="50%"
-                  pos="absolute"
-                  top={35}
-                  left={35}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  {/* Inner circle */}
-                  <Box
-                    w={180}
-                    h={180}
-                    bg="rgba(255, 255, 255, 0.25)"
-                    radius="50%"
-                    
-                  >
-                    {/* Center icon */}
-                    <Box
-                      w={80}
-                      h={80}
-                      bg="#FFFFFF"
-                      radius="50%"
-                     
-                    >
-                      <Text size="2rem" c="#EF4444">
-                        👤
-                      </Text>
-                    </Box>
-                  </Box>
-                </Box>
-
-                {/* Floating elements */}
-                <Box
-                  w={40}
-                  h={40}
-                  bg="rgba(255, 255, 255, 0.3)"
-                  radius="50%"
-                  pos="absolute"
-                  top={20}
-                  right={40}
-                />
-
-                <Box
-                  w={25}
-                  h={25}
-                  bg="rgba(255, 255, 255, 0.4)"
-                  radius="50%"
-                  pos="absolute"
-                  bottom={60}
-                  left={20}
-                />
-
-                <Box
-                  w={35}
-                  h={35}
-                  bg="rgba(255, 255, 255, 0.2)"
-                  radius="50%"
-                  pos="absolute"
-                  bottom={20}
-                  right={60}
-                />
-
-                {/* Welcome text overlay */}
-                <Stack
-                  pos="absolute"
-                  bottom={-20}
-                  w="100%"
-                  align="center"
-                  gap={4}
-                >
-                  <Text size="lg" fw={600} c="#FFFFFF" ta="center">
-                    Welcome to ActOnPov
-                  </Text>
-                  <Text size="sm" c="rgba(255, 255, 255, 0.8)" ta="center">
-                    Your journey starts here
-                  </Text>
-                </Stack>
-              </Box>
-            </Box>
-          </Paper>
-        </Box>
-      </Center>
-    </Paper>
+      {/* CSS for responsive text only */}
+      <style>{`
+        /* No animations - removed for performance */
+      `}</style>
+    </>
   );
 }
