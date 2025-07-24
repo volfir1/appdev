@@ -14,7 +14,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:5174', 'https://appdev-bw21.onrender.com'], 
+  origin: ['http://localhost:5173', 'http://localhost:5174', 'https://appdev-bw21.onrender.com', 'https://appdev-1.onrender.com'],
   credentials: true
 }));
 app.use(express.json());
