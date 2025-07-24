@@ -35,7 +35,8 @@ export default function SignUpPage() {
     try {
       // Send name, email, password to backend (remove confirmPassword)
       const { name, email, password } = data;
-      const response = await fetch('/api/auth/register', {
+      const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+      const response = await fetch(`${API_BASE}/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
