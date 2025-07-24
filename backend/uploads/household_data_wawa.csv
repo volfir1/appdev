@@ -1,0 +1,11 @@
+barangay,householdHead,address,familyIncome,employmentStatus,educationLevel,housingType,water,electricity,sanitation,governmentAssistance
+Wawa,Antonio Cruz,1 Wawa St,18000,Employed,High School,Owned,True,True,True,4Ps
+Wawa,Benita Santos,2 Wawa St,19500,Unemployed,College,Rented,True,True,True,
+Wawa,Carlos Dela Rosa,3 Wawa St,21000,Self-Employed,Elementary,Owned,True,False,True,Food Assistance
+Wawa,Diana Lim,4 Wawa St,23000,Employed,College,Owned,True,True,False,
+Wawa,Elena Bautista,5 Wawa St,25000,Unemployed,High School,Owned,True,True,True,Senior Citizens Assistance
+Wawa,Francisco Tan,6 Wawa St,18000,Employed,High School,Rented,True,True,True,
+Wawa,Gina Reyes,7 Wawa St,16000,Self-Employed,Elementary,Owned,False,True,True,4Ps
+Wawa,Hector Navarro,8 Wawa St,22000,Employed,College,Owned,True,True,True,
+Wawa,Irene Villanueva,9 Wawa St,20000,Unemployed,High School,Owned,True,False,True,Food Assistance
+Wawa,Julio Mercado,10 Wawa St,24000,Employed,High School,Rented,True,True,True,

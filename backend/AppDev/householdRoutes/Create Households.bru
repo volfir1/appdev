@@ -1,0 +1,33 @@
+meta {
+  name: Create Households
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:5000/api/households
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODdkMzUxNjg2MTZmYjU3NjM2NTE2YzQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTMwMzc1OTIsImV4cCI6MTc1MzA0MTE5Mn0.4KGTm3fliBHXxsVmbOq1DaJBz9dOxe9rXFNRPx_g6hA
+}
+
+body:json {
+  {
+    "barangay": "687d3e3f5251b0ee6e7f1d91",
+    "householdHead": "Juan Dela Cruzan",
+    "address": "123 Main St, Bagumbayan",
+    "familyIncome": 7500,
+    "employmentStatus": "Employed",
+    "educationLevel": "High School",
+    "housingType": "Owned",
+    "accessToServices": {
+      "water": true,
+      "electricity": true,
+      "sanitation": false
+    },
+    "governmentAssistance": ["4Ps", "PhilHealth"]
+  }
+}

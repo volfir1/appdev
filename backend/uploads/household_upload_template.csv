@@ -1,0 +1,5 @@
+barangay,householdHead,address,familyIncome,employmentStatus,educationLevel,housingType,water,electricity,sanitation,governmentAssistance
+Bagumbayan,Juan Dela Cruz,123 Main St,15000,Employed,High School,Owned,true,true,true,4Ps
+Wawa,Maria Santos,456 River Rd,20000,Unemployed,College,Rented,true,false,true,
+Bagumbayan,Pedro Reyes,789 Hilltop,12000,Self-Employed,Elementary,Owned,true,true,false,Food Assistance
+Wawa,Ana Lopez,321 Lakeview,25000,Employed,High School,Owned,true,true,true,

@@ -1,0 +1,9 @@
+barangay,householdHead,address,familyIncome,employmentStatus,educationLevel,housingType,water,electricity,sanitation,governmentAssistance
+Bagumbayan,Juan Dela Cruz,123 Main St,15000,Employed,High School,Owned,True,True,True,4Ps
+Wawa,Maria Santos,456 River Rd,20000,Unemployed,College,Rented,True,False,True,
+Bagumbayan,Pedro Reyes,789 Hilltop,12000,Self-Employed,Elementary,Owned,True,True,False,Food Assistance
+Wawa,Ana Lopez,321 Lakeview,25000,Employed,High School,Owned,True,True,True,
+Taguig Proper,Carlos Garcia,1001 Barangay St,18000,Employed,College,Rented,True,True,True,Pagtulong sa Mahihirap
+Maharlika,Lucia Fernandez,456 Maharlika Ave,22000,Unemployed,High School,Owned,True,True,True,
+Ususan,Mark Tan,23 Ususan Rd,21000,Self-Employed,College,Owned,True,True,True,4Ps
+San Juan,Rita Rivera,14 San Juan St,24000,Employed,High School,Rented,False,True,False,Senior Citizens Assistance

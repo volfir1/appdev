@@ -1,0 +1,21 @@
+meta {
+  name: Update Program
+  type: http
+  seq: 3
+}
+
+put {
+  url: http://localhost:5000/api/programs/687d4d6a770eb7a9670688b0
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODdkNGNmZjc3MGViN2E5NjcwNjg4YWIiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTMwNDIyNjEsImV4cCI6MTc1MzA0NTg2MX0._H5n3vJ6ZzLYLoROCbiVKUUlzKoJJSeQ1V9O3OSyGvY
+}
+
+body:json {
+  {
+   "name": "Kamasa"
+  }
+}

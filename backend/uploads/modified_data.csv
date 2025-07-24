@@ -1,0 +1,9 @@
+barangay,householdHead,address,familyIncome,employmentStatus,educationLevel,housingType,water,electricity,sanitation,governmentAssistance
+Libertad,Ismael Rios,45 Liberty Ave,25000,Employed,Graduate,Owned,True,True,True,Pantawid Pamilya
+San Vicente,Lydia Perez,230 St. James Rd,30000,Self-Employed,Undergraduate,Rented,True,True,False,None
+Bambang,Ricardo De La Cruz,55 Maligaya St,19000,Unemployed,Graduate,Owned,False,False,True,Food Assistance
+Talon Uno,Maria Mercado,121 Talon Rd,22000,Employed,High School,Rented,True,True,True,None
+North Signal,Sebastian Tan,12 Signal Hill,28000,Self-Employed,High School,Owned,True,True,True,Livelihood Assistance
+South Signal,Carmen Reyes,88 South Blvd,35000,Employed,College,Rented,True,False,True,None
+Bagumbayan,John Cruz,1201 Bagumbayan St,27000,Self-Employed,Undergraduate,Owned,True,True,False,4Ps
+Tanyag,Felicidad Aquino,10 Tanyag St,31000,Employed,Graduate,Rented,False,True,True,Senior Assistance

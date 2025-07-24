@@ -1,0 +1,32 @@
+meta {
+  name: Update Household
+  type: http
+  seq: 4
+}
+
+put {
+  url: http://localhost:5000/api/households/687bbc1ef560548a2ddcbae1
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODdkMzUxNjg2MTZmYjU3NjM2NTE2YzQiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTMwMzc1OTIsImV4cCI6MTc1MzA0MTE5Mn0.4KGTm3fliBHXxsVmbOq1DaJBz9dOxe9rXFNRPx_g6hA
+}
+
+body:json {
+  {
+    "barangay": "687d3e3f5251b0ee6e7f1d91",
+    "familyIncome": 15000,
+    "employmentStatus": "Self-Employed",
+    "educationLevel": "College",
+    "housingType": "Rented",
+    "accessToServices": {
+      "water": true,
+      "electricity": false,
+      "sanitation": true
+    },
+    "governmentAssistance": ["SSS"]
+  }
+  
+}

@@ -1,0 +1,15 @@
+meta {
+  name: Get All Programs
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:5000/api/programs/
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODdkNGNmZjc3MGViN2E5NjcwNjg4YWIiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTMwNDIyNjEsImV4cCI6MTc1MzA0NTg2MX0._H5n3vJ6ZzLYLoROCbiVKUUlzKoJJSeQ1V9O3OSyGvY
+}

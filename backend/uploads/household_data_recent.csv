@@ -1,0 +1,21 @@
+barangay,householdHead,address,familyIncome,employmentStatus,educationLevel,housingType,water,electricity,sanitation,governmentAssistance
+Bagumbayan,Alfredo Mendoza,10 Central Ave,17000,Employed,College,Owned,True,True,True,4Ps
+Bambang,Bea Lim,22 Bambang St,19500,Unemployed,High School,Rented,False,True,True,
+Fort Bonifacio,Carlo Gutierrez,5 Fort Bonifacio Rd,21000,Self-Employed,Elementary,Owned,True,False,True,Food Assistance
+Central Bicutan,Denise Ramos,8 Central Bicutan Blvd,23000,Employed,College,Owned,True,True,False,
+Santa Ana,Elena Cruz,12 Santa Ana Dr,25000,Unemployed,High School,Owned,True,True,True,Senior Citizens Assistance
+Ibayo-Tipas,Francis Tan,3 Ibayo-Tipas St,18000,Employed,High School,Rented,True,True,True,
+Calzada,Gina Santos,7 Calzada Rd,16000,Self-Employed,Elementary,Owned,False,True,True,4Ps
+Hagonoy,Hector Dela Rosa,15 Hagonoy Ave,22000,Employed,College,Owned,True,True,True,
+Napindan,Irene Villanueva,19 Napindan St,20000,Unemployed,High School,Owned,True,False,True,Food Assistance
+San Miguel,Julio Navarro,2 San Miguel Rd,24000,Employed,High School,Rented,True,True,True,
+Tuktukan,Karen Bautista,11 Tuktukan Dr,18500,Self-Employed,Elementary,Owned,True,True,False,
+Ususan,Leo Mercado,6 Ususan Ave,21000,Employed,College,Owned,True,True,True,4Ps
+Wawa,Mariah Ong,13 Wawa St,17000,Unemployed,High School,Owned,True,True,True,
+Ligid-Tipas,Nestor Reyes,4 Ligid-Tipas Rd,22500,Employed,High School,Rented,False,True,True,
+Palingon,Olivia Sy,9 Palingon Ave,19000,Self-Employed,Elementary,Owned,True,True,True,Food Assistance
+Lower Bicutan,Paulo Chua,17 Lower Bicutan Dr,25000,Employed,College,Owned,True,True,True,
+New Lower Bicutan,Queenie Go,21 New Lower Bicutan St,18000,Unemployed,High School,Owned,True,False,True,Senior Citizens Assistance
+Upper Bicutan,Rafael Lim,14 Upper Bicutan Rd,16000,Employed,High School,Rented,True,True,True,
+Western Bicutan,Sophia Tan,18 Western Bicutan Ave,20000,Self-Employed,Elementary,Owned,True,True,False,4Ps
+Central Signal Village,Timothy Yu,20 Central Signal Village St,23000,Employed,College,Owned,True,True,True,

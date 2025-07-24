@@ -1,0 +1,15 @@
+meta {
+  name: Delete All Household
+  type: http
+  seq: 7
+}
+
+delete {
+  url: http://localhost:5000/api/households/delete/all
+  body: none
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODdkNGNmZjc3MGViN2E5NjcwNjg4YWIiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTMyNzA3MjIsImV4cCI6MTc1MzI3NDMyMn0.7QUr8IhpdJoUZdASxlZp5wTcKegEMI5eRR3H_1Y37fg
+}

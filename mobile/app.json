@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "ActOnPov",
+    "slug": "mobile-appdev",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "edgeToEdgeEnabled": true,
+      "package": "com.lester20.mobileappdev"
+    },
+    "web": {
+      "bundler": "metro",
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "15564f86-5857-447f-95ef-292cf642b8d7"
+      }
+    },
+    "plugins": [
+      "expo-secure-store",
+      "expo-dev-client"
+    ],
+    "owner": "lester21"
+  }
+}

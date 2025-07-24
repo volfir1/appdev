@@ -1,0 +1,22 @@
+meta {
+  name: Edit User
+  type: http
+  seq: 2
+}
+
+put {
+  url: http://localhost:5000/api/users/687da2a8e773f0ed55fbab75
+  body: json
+  auth: inherit
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2ODdkNzM3NTAxNDE1NjQzNDk0ZDZiMzIiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTMwNjY0NjksImV4cCI6MTc1MzA3MDA2OX0.kCJFOFrkAX6x-4Z1rSvKECKP_nBHJbExVC90miyQ0Mk
+}
+
+body:json {
+  {
+    
+    "barangay": "Wawa"
+  }
+}
