@@ -36,6 +36,26 @@ const HouseholdForm = ({
   taguigBarangays,
   viewOnly = false,
 }) => {
+  const role = localStorage.getItem('role');
+
+  // Helper: get worker's barangay value (id)
+  const workerBarangayValue = React.useMemo(() => {
+    if (role === 'worker' && taguigBarangays && taguigBarangays.length > 0) {
+      // Try to find the barangay assigned to the worker in formData
+      if (formData.barangay) return formData.barangay;
+      // Fallback: use the first barangay in the list
+      return taguigBarangays[0].value;
+    }
+    return undefined;
+  }, [role, taguigBarangays, formData.barangay]);
+
+  // When formData.barangay is empty and user is worker, set it automatically
+  React.useEffect(() => {
+    if (role === 'worker' && !formData.barangay && workerBarangayValue) {
+      onInputChange('barangay', workerBarangayValue);
+    }
+  }, [role, formData.barangay, workerBarangayValue, onInputChange]);
+
   return (
     <Box className="max-w-4xl mx-auto p-4">
       <Card >
@@ -69,10 +89,18 @@ const HouseholdForm = ({
               </Text>
               <Grid>
                   <Grid.Col span={{ base: 12, md: 6 }}>
-                    {viewOnly ? (
+                    {viewOnly || role === 'worker' ? (
                       <TextInput
                         label="Barangay"
-                        value={formData.barangay?.name || formData.barangay || 'N/A'}
+                        value={
+                          taguigBarangays && taguigBarangays.length > 0
+                            ? (
+                                taguigBarangays.find(b => b.value === formData.barangay)?.label
+                                  || formData.barangay
+                                  || 'N/A'
+                              )
+                            : (formData.barangay || 'N/A')
+                        }
                         readOnly
                         size="md"
                         className="form-input-animated"

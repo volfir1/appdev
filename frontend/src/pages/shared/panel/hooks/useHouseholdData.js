@@ -24,11 +24,31 @@ const useHouseholdData = () => {
   // Fetch barangay list from backend
   useEffect(() => {
     const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+    const role = localStorage.getItem('role');
+    const userId = localStorage.getItem('userId');
     axios.get(`${API_BASE}/barangays`, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
       .then(res => {
-        setBarangayList(res.data.map(b => ({ label: b.name, value: b._id })));
+        if (role === 'worker' && userId) {
+          // Only allow the assigned barangay for worker
+          axios.get(`${API_BASE}/users/${userId}`, {
+            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+          })
+            .then(userRes => {
+              const assigned = userRes.data.barangay?._id || '';
+              setBarangayList(res.data.filter(b => b._id === assigned).map(b => ({ label: b.name, value: b._id })));
+              setAssignedBarangay(assigned);
+              setFormData(prev => ({ ...prev, barangay: assigned }));
+            })
+            .catch(() => {
+              setBarangayList([]);
+              setAssignedBarangay(null);
+              setFormData(prev => ({ ...prev, barangay: '' }));
+            });
+        } else {
+          setBarangayList(res.data.map(b => ({ label: b.name, value: b._id })));
+        }
       })
       .catch(() => setBarangayList([]));
   }, []);

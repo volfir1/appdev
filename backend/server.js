@@ -7,7 +7,7 @@ const householdRoutes = require('./routes/householdRoutes');
 const userRoutes = require('./routes/userRoutes');
 const barangayRoutes = require('./routes/barangayRoutes');
 const programsRoutes = require('./routes/programsRoutes');
-const referralRoutes = require('./routes/rererralRoutes');
+const referralRoutes = require('./routes/referralRoutes');
 dotenv.config();
 
 const app = express();

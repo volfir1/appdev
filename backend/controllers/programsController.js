@@ -13,6 +13,8 @@ exports.createProgram = async (req, res) => {
     }
     const program = new Program({ name, description, startDate, endDate, createdBy: req.user.userId });
     await program.save();
+    // Populate createdBy before sending response
+    await program.populate('createdBy', 'name email role');
     res.status(201).json(program);
   } catch (error) {
     res.status(500).json({ message: 'Create program error', error: error.message });
@@ -24,9 +26,13 @@ exports.getPrograms = async (req, res) => {
   try {
     let programs;
     if (req.user.role === 'admin' || req.user.role === 'worker') {
-      programs = await Program.find().sort({ createdAt: -1 });
+      programs = await Program.find()
+        .populate('createdBy', 'name email role')
+        .sort({ createdAt: -1 });
     } else if (req.user.role === 'ngo_staff') {
-      programs = await Program.find({ createdBy: req.user.userId }).sort({ createdAt: -1 });
+      programs = await Program.find({ createdBy: req.user.userId })
+        .populate('createdBy', 'name email role')
+        .sort({ createdAt: -1 });
     } else {
       return res.status(403).json({ message: 'Access denied' });
     }
@@ -39,7 +45,7 @@ exports.getPrograms = async (req, res) => {
 // Get a single program by ID
 exports.getProgramById = async (req, res) => {
   try {
-    const program = await Program.findById(req.params.id);
+    const program = await Program.findById(req.params.id).populate('createdBy', 'name email role');
     if (!program) {
       return res.status(404).json({ message: 'Program not found' });
     }
@@ -67,7 +73,7 @@ exports.updateProgram = async (req, res) => {
       }
     }
 
-    const program = await Program.findByIdAndUpdate(
+    let program = await Program.findByIdAndUpdate(
       req.params.id,
       updateFields,
       { new: true, runValidators: true }
@@ -75,6 +81,7 @@ exports.updateProgram = async (req, res) => {
     if (!program) {
       return res.status(404).json({ message: 'Program not found' });
     }
+    program = await Program.findById(program._id).populate('createdBy', 'name email role');
     res.status(200).json(program);
   } catch (error) {
     res.status(500).json({ message: 'Update program error', error: error.message });

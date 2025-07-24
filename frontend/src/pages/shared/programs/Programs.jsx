@@ -50,20 +50,17 @@ const Programs = () => {
   const fetchPrograms = React.useCallback(async () => {
     setLoading(true);
     try {
-      // Fetch programs and populate creator for admin
-      let data = await getPrograms();
+      const data = await getPrograms();
+      setPrograms(data);
+
       if (role === 'admin') {
-        // Get unique creators for filter dropdown
-        const uniqueCreators = Array.from(
-          new Map(
-            data
-              .filter(p => p.createdBy && p.createdBy.name)
-              .map(p => [p.createdBy._id || p.createdBy, p.createdBy])
-          ).values()
-        );
+        const uniqueCreators = Array.from(new Set(data.map(p => p.createdBy?._id)))
+          .map(id => {
+            return data.find(p => p.createdBy?._id === id)?.createdBy;
+          })
+          .filter(Boolean); // remove any null/undefined entries
         setCreators(uniqueCreators);
       }
-      setPrograms(data);
     } catch (error) {
       console.error('Error fetching programs:', error);
     }
@@ -346,18 +343,7 @@ const Programs = () => {
                 <option value="upcoming">Upcoming</option>
                 <option value="ended">Ended</option>
               </select>
-              {role === 'admin' && (
-                <select
-                  value={filterCreator}
-                  onChange={e => setFilterCreator(e.target.value)}
-                  className="border rounded px-2 py-1 text-sm text-slate-700 ml-0 md:ml-2"
-                >
-                  <option value="all">All Creators</option>
-                  {creators.map(c => (
-                    <option key={c._id || c} value={c._id || c}>{c.name || c.email || c._id || c}</option>
-                  ))}
-                </select>
-              )}
+              
             </div>
           </div>
           {loading ? (
@@ -375,9 +361,7 @@ const Programs = () => {
                   <Table.Th className="text-slate-700 font-semibold text-sm uppercase tracking-wider">Description</Table.Th>
                   <Table.Th className="text-slate-700 font-semibold text-sm uppercase tracking-wider">Timeline</Table.Th>
                   <Table.Th className="text-slate-700 font-semibold text-sm uppercase tracking-wider">Status</Table.Th>
-                  {role === 'admin' && (
-                    <Table.Th className="text-slate-700 font-semibold text-sm uppercase tracking-wider">Created By</Table.Th>
-                  )}
+                  
                   <Table.Th className="text-slate-700 font-semibold text-sm uppercase tracking-wider">Actions</Table.Th>
                 </Table.Tr>
               </Table.Thead>
@@ -453,13 +437,7 @@ const Programs = () => {
                         <Table.Td className="py-4">
                           {getStatusBadge(program.startDate, program.endDate)}
                         </Table.Td>
-                        {role === 'admin' && (
-                          <Table.Td className="py-4">
-                            <Text className="text-slate-700 font-medium">
-                              {program.createdBy?.name || program.createdBy?.email || program.createdBy || 'Unknown'}
-                            </Text>
-                          </Table.Td>
-                        )}
+                        
                         <Table.Td className="py-4">
                           <Group gap="xs">
                             <Tooltip label="Edit Program" position="top">
