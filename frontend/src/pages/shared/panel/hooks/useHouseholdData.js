@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 
 const useHouseholdData = () => {
@@ -20,6 +20,45 @@ const useHouseholdData = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [assignedBarangay, setAssignedBarangay] = useState(null);
+
+
+  // Fetch households from backend (move up)
+  const fetchHouseholds = useCallback(async () => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError('No token found, please log in');
+        setLoading(false);
+        return;
+      }
+      const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+      const response = await axios.get(`${API_BASE}/households`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (Array.isArray(response.data)) {
+        const role = localStorage.getItem('role');
+        if (role === 'worker' && assignedBarangay) {
+          setHouseholds(response.data.filter(h => h.barangay?._id === assignedBarangay));
+        } else {
+          setHouseholds(response.data);
+        }
+      } else {
+        setHouseholds([]);
+      }
+      setError('');
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('role');
+        setError('Session expired or unauthorized. Please log in again.');
+      } else {
+        setError(err.response?.data?.message || 'Failed to fetch households');
+      }
+    } finally {
+      setLoading(false);
+    }
+  }, [assignedBarangay]);
 
   // Fetch barangay list from backend
   useEffect(() => {
@@ -79,45 +118,7 @@ const useHouseholdData = () => {
       }));
     }
     fetchHouseholds();
-  }, [barangayList.length]);
-
-  // Fetch households from backend
-  const fetchHouseholds = async () => {
-    try {
-      setLoading(true);
-      const token = localStorage.getItem('token');
-      if (!token) {
-        setError('No token found, please log in');
-        setLoading(false);
-        return;
-      }
-      const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
-      const response = await axios.get(`${API_BASE}/households`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      if (Array.isArray(response.data)) {
-        const role = localStorage.getItem('role');
-        if (role === 'worker' && assignedBarangay) {
-          setHouseholds(response.data.filter(h => h.barangay?._id === assignedBarangay));
-        } else {
-          setHouseholds(response.data);
-        }
-      } else {
-        setHouseholds([]);
-      }
-      setError('');
-    } catch (err) {
-      if (err.response && err.response.status === 401) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('role');
-        setError('Session expired or unauthorized. Please log in again.');
-      } else {
-        setError(err.response?.data?.message || 'Failed to fetch households');
-      }
-    } finally {
-      setLoading(false);
-    }
-  };
+  }, [barangayList.length, fetchHouseholds]);
 
   const handleInputChange = (name, value) => {
     if (name.includes('accessToServices.')) {

@@ -230,17 +230,7 @@ export default function NgoNavbar() {
 
               <div className="drawer-divider"></div>
 
-              {/* Settings */}
-                <button
-                  className="drawer-nav-item"
-                  onClick={() => {
-                    navigate('/ngo/settings');
-                    setDrawerOpen(false);
-                  }}
-                >
-                  <IconSettings size={20} className="drawer-nav-icon" />
-                  <span className="drawer-nav-label">Settings</span>
-                </button>
+              
 
               {/* Logout */}
               <button

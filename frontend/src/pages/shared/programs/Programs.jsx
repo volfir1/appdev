@@ -19,7 +19,8 @@ import {
   Divider,
   Tooltip,
   Avatar,
-  Box
+  Box,
+  ScrollArea
 } from '@mantine/core';
 import { Edit, Trash2, Plus, Calendar, FileText, Users, Activity } from 'lucide-react';
 import { getPrograms, createProgram, updateProgram, deleteProgram } from './programService';
@@ -33,8 +34,7 @@ const Programs = () => {
   const [submitting, setSubmitting] = useState(false);
   const [search, setSearch] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
-  const [filterCreator, setFilterCreator] = useState('all');
-  const [creators, setCreators] = useState([]); // For admin filter
+  
 
   // Form state
   const [formData, setFormData] = useState({
@@ -53,14 +53,7 @@ const Programs = () => {
       const data = await getPrograms();
       setPrograms(data);
 
-      if (role === 'admin') {
-        const uniqueCreators = Array.from(new Set(data.map(p => p.createdBy?._id)))
-          .map(id => {
-            return data.find(p => p.createdBy?._id === id)?.createdBy;
-          })
-          .filter(Boolean); // remove any null/undefined entries
-        setCreators(uniqueCreators);
-      }
+      
     } catch (error) {
       console.error('Error fetching programs:', error);
     }
@@ -222,34 +215,29 @@ const Programs = () => {
       else if (filterStatus === 'upcoming') matchesStatus = now < start;
       else if (filterStatus === 'ended') matchesStatus = now > end;
     }
-    // Creator filter (admin only)
-    let matchesCreator = true;
-    if (role === 'admin' && filterCreator !== 'all') {
-      matchesCreator = program.createdBy && (program.createdBy._id || program.createdBy) === filterCreator;
-    }
-    return matchesSearch && matchesStatus && matchesCreator;
+    return matchesSearch && matchesStatus;
   });
 
   return (
-    <Box className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-      <Container size="xl" className="py-8">
+    <Box className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50" pt={100}>
+      <Container size="xl" className="py-4 sm:py-8 px-2 sm:px-4">
         {/* Header Section */}
-        <div className="mb-8">
-          <Group justify="space-between" className="mb-6">
-            <div>
-              <Title order={1} className="text-slate-800 font-bold mb-2 text-3xl">
+        <div className="mb-6 sm:mb-8">
+          <Group justify="space-between" className="mb-4 sm:mb-6" wrap="wrap">
+            <div className="w-full sm:w-auto mb-4 sm:mb-0">
+              <Title order={1} className="text-slate-800 font-bold mb-2 text-2xl sm:text-3xl">
                 Programs Management
               </Title>
-              <Text size="lg" className="text-slate-600">
+              <Text size="lg" className="text-slate-600 text-sm sm:text-base">
                 Manage assistance programs and track their progress
               </Text>
               {role === 'ngo_staff' && (
-                <Text size="sm" c="blue.7" mt={8}>
+                <Text size="sm" c="blue.7" mt={8} className="text-xs sm:text-sm">
                   You only see programs created by your account.
                 </Text>
               )}
               {role === 'admin' && (
-                <Text size="sm" c="teal.7" mt={8}>
+                <Text size="sm" c="teal.7" mt={8} className="text-xs sm:text-sm">
                   You can view and manage all programs in the system.
                 </Text>
               )}
@@ -259,62 +247,62 @@ const Programs = () => {
               onClick={() => setOpened(true)}
               size="md"
               radius="lg"
-              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 w-full sm:w-auto"
             >
               New Program
             </Button>
           </Group>
 
           {/* Stats Cards */}
-          <Grid className="mb-8">
-            <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
+          <Grid className="mb-6 sm:mb-8">
+            <Grid.Col span={{ base: 6, sm: 6, md: 3 }}>
               <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
-                <Group justify="space-between">
-                  <div>
-                    <Text size="sm" className="text-slate-600 font-medium">Total Programs</Text>
-                    <Text size="xl" className="text-slate-800 font-bold">{stats.total}</Text>
+                <Group justify="space-between" wrap="nowrap">
+                  <div className="min-w-0">
+                    <Text size="sm" className="text-slate-600 font-medium text-xs sm:text-sm">Total Programs</Text>
+                    <Text size="xl" className="text-slate-800 font-bold text-lg sm:text-xl">{stats.total}</Text>
                   </div>
-                  <Avatar size={40} radius="lg" className="bg-blue-100">
-                    <FileText size={20} className="text-blue-600" />
+                  <Avatar size={32} radius="lg" className="bg-blue-100 hidden sm:flex sm:w-10 sm:h-10">
+                    <FileText size={16} className="text-blue-600 sm:w-5 sm:h-5" />
                   </Avatar>
                 </Group>
               </Card>
             </Grid.Col>
-            <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
+            <Grid.Col span={{ base: 6, sm: 6, md: 3 }}>
               <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
-                <Group justify="space-between">
-                  <div>
-                    <Text size="sm" className="text-slate-600 font-medium">Active</Text>
-                    <Text size="xl" className="text-teal-600 font-bold">{stats.active}</Text>
+                <Group justify="space-between" wrap="nowrap">
+                  <div className="min-w-0">
+                    <Text size="sm" className="text-slate-600 font-medium text-xs sm:text-sm">Active</Text>
+                    <Text size="xl" className="text-teal-600 font-bold text-lg sm:text-xl">{stats.active}</Text>
                   </div>
-                  <Avatar size={40} radius="lg" className="bg-teal-100">
-                    <Activity size={20} className="text-teal-600" />
+                  <Avatar size={32} radius="lg" className="bg-teal-100 hidden sm:flex sm:w-10 sm:h-10">
+                    <Activity size={16} className="text-teal-600 sm:w-5 sm:h-5" />
                   </Avatar>
                 </Group>
               </Card>
             </Grid.Col>
-            <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
+            <Grid.Col span={{ base: 6, sm: 6, md: 3 }}>
               <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
-                <Group justify="space-between">
-                  <div>
-                    <Text size="sm" className="text-slate-600 font-medium">Upcoming</Text>
-                    <Text size="xl" className="text-indigo-600 font-bold">{stats.upcoming}</Text>
+                <Group justify="space-between" wrap="nowrap">
+                  <div className="min-w-0">
+                    <Text size="sm" className="text-slate-600 font-medium text-xs sm:text-sm">Upcoming</Text>
+                    <Text size="xl" className="text-indigo-600 font-bold text-lg sm:text-xl">{stats.upcoming}</Text>
                   </div>
-                  <Avatar size={40} radius="lg" className="bg-indigo-100">
-                    <Calendar size={20} className="text-indigo-600" />
+                  <Avatar size={32} radius="lg" className="bg-indigo-100 hidden sm:flex sm:w-10 sm:h-10">
+                    <Calendar size={16} className="text-indigo-600 sm:w-5 sm:h-5" />
                   </Avatar>
                 </Group>
               </Card>
             </Grid.Col>
-            <Grid.Col span={{ base: 12, sm: 6, md: 3 }}>
+            <Grid.Col span={{ base: 6, sm: 6, md: 3 }}>
               <Card className="bg-white/70 backdrop-blur-sm border-0 shadow-sm hover:shadow-md transition-shadow duration-200">
-                <Group justify="space-between">
-                  <div>
-                    <Text size="sm" className="text-slate-600 font-medium">Completed</Text>
-                    <Text size="xl" className="text-slate-600 font-bold">{stats.ended}</Text>
+                <Group justify="space-between" wrap="nowrap">
+                  <div className="min-w-0">
+                    <Text size="sm" className="text-slate-600 font-medium text-xs sm:text-sm">Completed</Text>
+                    <Text size="xl" className="text-slate-600 font-bold text-lg sm:text-xl">{stats.ended}</Text>
                   </div>
-                  <Avatar size={40} radius="lg" className="bg-slate-100">
-                    <Users size={20} className="text-slate-600" />
+                  <Avatar size={32} radius="lg" className="bg-slate-100 hidden sm:flex sm:w-10 sm:h-10">
+                    <Users size={16} className="text-slate-600 sm:w-5 sm:h-5" />
                   </Avatar>
                 </Group>
               </Card>
@@ -322,30 +310,32 @@ const Programs = () => {
           </Grid>
         </div>
 
-        {/* Programs Table + Search/Filters for Admin */}
+        {/* Programs Table + Search/Filters */}
         <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-lg rounded-2xl overflow-hidden">
-          <div className="p-4 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <div className="flex flex-col md:flex-row gap-2 items-center">
-              <TextInput
-                placeholder="Search by name or description"
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                size="sm"
-                className="w-64"
-              />
-              <select
-                value={filterStatus}
-                onChange={e => setFilterStatus(e.target.value)}
-                className="border rounded px-2 py-1 text-sm text-slate-700 ml-0 md:ml-2"
-              >
-                <option value="all">All Statuses</option>
-                <option value="active">Active</option>
-                <option value="upcoming">Upcoming</option>
-                <option value="ended">Ended</option>
-              </select>
-              
+          <div className="p-3 sm:p-4 flex flex-col gap-3 sm:gap-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div className="flex flex-col sm:flex-row gap-2 sm:items-center w-full sm:w-auto">
+                <TextInput
+                  placeholder="Search by name or description"
+                  value={search}
+                  onChange={e => setSearch(e.target.value)}
+                  size="sm"
+                  className="w-full sm:w-64"
+                />
+                <select
+                  value={filterStatus}
+                  onChange={e => setFilterStatus(e.target.value)}
+                  className="border rounded px-2 py-1 text-sm text-slate-700 w-full sm:w-auto sm:ml-0 md:ml-2"
+                >
+                  <option value="all">All Statuses</option>
+                  <option value="active">Active</option>
+                  <option value="upcoming">Upcoming</option>
+                  <option value="ended">Ended</option>
+                </select>
+              </div>
             </div>
           </div>
+          
           {loading ? (
             <div className="flex justify-center items-center h-64">
               <div className="text-center">
@@ -354,122 +344,124 @@ const Programs = () => {
               </div>
             </div>
           ) : (
-            <Table highlightOnHover verticalSpacing="lg" horizontalSpacing="xl" className="min-w-full">
-              <Table.Thead>
-                <Table.Tr className="border-b border-slate-200">
-                  <Table.Th className="text-slate-700 font-semibold text-sm uppercase tracking-wider py-4">Program</Table.Th>
-                  <Table.Th className="text-slate-700 font-semibold text-sm uppercase tracking-wider">Description</Table.Th>
-                  <Table.Th className="text-slate-700 font-semibold text-sm uppercase tracking-wider">Timeline</Table.Th>
-                  <Table.Th className="text-slate-700 font-semibold text-sm uppercase tracking-wider">Status</Table.Th>
-                  
-                  <Table.Th className="text-slate-700 font-semibold text-sm uppercase tracking-wider">Actions</Table.Th>
-                </Table.Tr>
-              </Table.Thead>
-              <Table.Tbody>
-                {filteredPrograms.length === 0 ? (
-                  <Table.Tr>
-                    <Table.Td colSpan={role === 'admin' ? 6 : 5} className="text-center py-16">
-                      <div className="flex flex-col items-center gap-4">
-                        <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center">
-                          <FileText size={32} className="text-slate-400" />
-                        </div>
-                        <div>
-                          <Text size="lg" className="text-slate-600 font-medium mb-2">No programs found</Text>
-                          <Text size="sm" className="text-slate-500">Create your first program to get started</Text>
-                        </div>
-                        <Button
-                          leftSection={<Plus size={16} />}
-                          onClick={() => setOpened(true)}
-                          variant="light"
-                          size="sm"
-                          radius="lg"
-                          className="mt-2"
-                        >
-                          Add Program
-                        </Button>
-                      </div>
-                    </Table.Td>
-                  </Table.Tr>
-                ) : (
-                  filteredPrograms.map((program) => {
-                    const progress = getProgressDays(program.startDate, program.endDate);
-                    return (
-                      <Table.Tr key={program._id} className="hover:bg-slate-50/50 transition-colors duration-150">
-                        <Table.Td className="py-4">
-                          <div>
-                            <Text className="text-slate-800 font-semibold text-base mb-1">
-                              {program.name || 'Unnamed Program'}
-                            </Text>
-                            <div className="w-full bg-slate-200 rounded-full h-1.5">
-                              <div 
-                                className="bg-gradient-to-r from-blue-500 to-indigo-500 h-1.5 rounded-full transition-all duration-300" 
-                                style={{ width: `${progress.percentage}%` }}
-                              ></div>
+            <ScrollArea>
+              <div className="min-w-[800px]">
+                <Table highlightOnHover verticalSpacing="lg" horizontalSpacing="xl" className="min-w-full">
+                  <Table.Thead>
+                    <Table.Tr className="border-b border-slate-200">
+                      <Table.Th className="text-slate-700 font-semibold text-sm uppercase tracking-wider py-4 min-w-[200px]">Program</Table.Th>
+                      <Table.Th className="text-slate-700 font-semibold text-sm uppercase tracking-wider min-w-[250px]">Description</Table.Th>
+                      <Table.Th className="text-slate-700 font-semibold text-sm uppercase tracking-wider min-w-[150px]">Timeline</Table.Th>
+                      <Table.Th className="text-slate-700 font-semibold text-sm uppercase tracking-wider min-w-[100px]">Status</Table.Th>
+                      <Table.Th className="text-slate-700 font-semibold text-sm uppercase tracking-wider min-w-[100px]">Actions</Table.Th>
+                    </Table.Tr>
+                  </Table.Thead>
+                  <Table.Tbody>
+                    {filteredPrograms.length === 0 ? (
+                      <Table.Tr>
+                        <Table.Td colSpan={role === 'admin' ? 6 : 5} className="text-center py-16">
+                          <div className="flex flex-col items-center gap-4">
+                            <div className="w-16 h-16 rounded-full bg-slate-100 flex items-center justify-center">
+                              <FileText size={32} className="text-slate-400" />
                             </div>
-                            <Text size="xs" className="text-slate-500 mt-1">
-                              {progress.elapsed} / {progress.total} days
-                            </Text>
+                            <div>
+                              <Text size="lg" className="text-slate-600 font-medium mb-2">No programs found</Text>
+                              <Text size="sm" className="text-slate-500">Create your first program to get started</Text>
+                            </div>
+                            <Button
+                              leftSection={<Plus size={16} />}
+                              onClick={() => setOpened(true)}
+                              variant="light"
+                              size="sm"
+                              radius="lg"
+                              className="mt-2"
+                            >
+                              Add Program
+                            </Button>
                           </div>
-                        </Table.Td>
-                        <Table.Td className="py-4">
-                          <Text className="text-slate-600 leading-relaxed max-w-xs" title={program.description}>
-                            {program.description?.length > 100 
-                              ? `${program.description.substring(0, 100)}...` 
-                              : program.description || 'No description available'}
-                          </Text>
-                        </Table.Td>
-                        <Table.Td className="py-4">
-                          <div className="space-y-2">
-                            <div className="flex items-center gap-2">
-                              <Calendar size={14} className="text-slate-400" />
-                              <Text size="sm" className="text-slate-600">
-                                {formatDate(program.startDate)}
-                              </Text>
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <div className="w-3.5 h-3.5"></div>
-                              <Text size="sm" className="text-slate-500">
-                                {formatDate(program.endDate)}
-                              </Text>
-                            </div>
-                          </div>
-                        </Table.Td>
-                        <Table.Td className="py-4">
-                          {getStatusBadge(program.startDate, program.endDate)}
-                        </Table.Td>
-                        
-                        <Table.Td className="py-4">
-                          <Group gap="xs">
-                            <Tooltip label="Edit Program" position="top">
-                              <ActionIcon
-                                variant="subtle"
-                                size="lg"
-                                radius="lg"
-                                className="text-blue-600 hover:bg-blue-50 transition-colors duration-150"
-                                onClick={() => handleEdit(program)}
-                              >
-                                <Edit size={16} />
-                              </ActionIcon>
-                            </Tooltip>
-                            <Tooltip label="Delete Program" position="top">
-                              <ActionIcon
-                                variant="subtle"
-                                size="lg"
-                                radius="lg"
-                                className="text-red-600 hover:bg-red-50 transition-colors duration-150"
-                                onClick={() => handleDelete(program._id)}
-                              >
-                                <Trash2 size={16} />
-                              </ActionIcon>
-                            </Tooltip>
-                          </Group>
                         </Table.Td>
                       </Table.Tr>
-                    );
-                  })
-                )}
-              </Table.Tbody>
-            </Table>
+                    ) : (
+                      filteredPrograms.map((program) => {
+                        const progress = getProgressDays(program.startDate, program.endDate);
+                        return (
+                          <Table.Tr key={program._id} className="hover:bg-slate-50/50 transition-colors duration-150">
+                            <Table.Td className="py-4">
+                              <div>
+                                <Text className="text-slate-800 font-semibold text-base mb-1">
+                                  {program.name || 'Unnamed Program'}
+                                </Text>
+                                <div className="w-full bg-slate-200 rounded-full h-1.5">
+                                  <div 
+                                    className="bg-gradient-to-r from-blue-500 to-indigo-500 h-1.5 rounded-full transition-all duration-300" 
+                                    style={{ width: `${progress.percentage}%` }}
+                                  ></div>
+                                </div>
+                                <Text size="xs" className="text-slate-500 mt-1">
+                                  {progress.elapsed} / {progress.total} days
+                                </Text>
+                              </div>
+                            </Table.Td>
+                            <Table.Td className="py-4">
+                              <Text className="text-slate-600 leading-relaxed max-w-xs" title={program.description}>
+                                {program.description?.length > 100 
+                                  ? `${program.description.substring(0, 100)}...` 
+                                  : program.description || 'No description available'}
+                              </Text>
+                            </Table.Td>
+                            <Table.Td className="py-4">
+                              <div className="space-y-2">
+                                <div className="flex items-center gap-2">
+                                  <Calendar size={14} className="text-slate-400" />
+                                  <Text size="sm" className="text-slate-600">
+                                    {formatDate(program.startDate)}
+                                  </Text>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <div className="w-3.5 h-3.5"></div>
+                                  <Text size="sm" className="text-slate-500">
+                                    {formatDate(program.endDate)}
+                                  </Text>
+                                </div>
+                              </div>
+                            </Table.Td>
+                            <Table.Td className="py-4">
+                              {getStatusBadge(program.startDate, program.endDate)}
+                            </Table.Td>
+                            <Table.Td className="py-4">
+                              <Group gap="xs">
+                                <Tooltip label="Edit Program" position="top">
+                                  <ActionIcon
+                                    variant="subtle"
+                                    size="lg"
+                                    radius="lg"
+                                    className="text-blue-600 hover:bg-blue-50 transition-colors duration-150"
+                                    onClick={() => handleEdit(program)}
+                                  >
+                                    <Edit size={16} />
+                                  </ActionIcon>
+                                </Tooltip>
+                                <Tooltip label="Delete Program" position="top">
+                                  <ActionIcon
+                                    variant="subtle"
+                                    size="lg"
+                                    radius="lg"
+                                    className="text-red-600 hover:bg-red-50 transition-colors duration-150"
+                                    onClick={() => handleDelete(program._id)}
+                                  >
+                                    <Trash2 size={16} />
+                                  </ActionIcon>
+                                </Tooltip>
+                              </Group>
+                            </Table.Td>
+                          </Table.Tr>
+                        );
+                      })
+                    )}
+                  </Table.Tbody>
+                </Table>
+              </div>
+            </ScrollArea>
           )}
         </Card>
 
@@ -502,6 +494,7 @@ const Programs = () => {
             blur: 3,
           }}
           className="backdrop-blur-sm"
+          fullScreen={window.innerWidth < 768}
         >
           <Divider className="mb-6 -mt-2" />
           
@@ -541,7 +534,7 @@ const Programs = () => {
               />
 
               <Grid>
-                <Grid.Col span={6}>
+                <Grid.Col span={{ base: 12, sm: 6 }}>
                   <TextInput
                     label="Start Date"
                     description="When the program begins"
@@ -558,7 +551,7 @@ const Programs = () => {
                     }}
                   />
                 </Grid.Col>
-                <Grid.Col span={6}>
+                <Grid.Col span={{ base: 12, sm: 6 }}>
                   <TextInput
                     label="End Date"
                     description="When the program concludes"
@@ -579,13 +572,13 @@ const Programs = () => {
 
               <Divider className="mt-2" />
 
-              <Group justify="flex-end" className="pt-2">
+              <Group justify="flex-end" className="pt-2 flex-col sm:flex-row gap-2">
                 <Button
                   variant="subtle"
                   onClick={handleCloseModal}
                   size="md"
                   radius="lg"
-                  className="text-slate-600 hover:bg-slate-100"
+                  className="text-slate-600 hover:bg-slate-100 w-full sm:w-auto order-2 sm:order-1"
                 >
                   Cancel
                 </Button>
@@ -594,7 +587,7 @@ const Programs = () => {
                   loading={submitting}
                   size="md"
                   radius="lg"
-                  className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+                  className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 w-full sm:w-auto order-1 sm:order-2"
                   leftSection={editing ? <Edit size={16} /> : <Plus size={16} />}
                 >
                   {editing ? 'Update Program' : 'Create Program'}

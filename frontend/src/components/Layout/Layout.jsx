@@ -76,12 +76,11 @@ const Layout = () => {
         backgroundColor: 'transparent',
         height: '100vh',
         minHeight: '100vh',
-        paddingTop: 80
       }}
       className="hide-scrollbar"
     >
       {/* Header */}
-      <AppShell.Header>
+      <AppShell.Header style={{ zIndex: 1000 }}>
         {role === 'admin' && <AdminNavbar />}
         {role === 'ngo_staff' && <NgoNavbar />}
         {role === 'worker' && <UserNavbar />}

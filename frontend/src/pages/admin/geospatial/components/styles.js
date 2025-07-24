@@ -1,7 +1,4 @@
-/**
- * Clean Professional CSS for Taguig Geospatial Application
- * Focused on usability, performance, and professional appearance
- */
+
 
 export const CSS_STYLES = `
   /* Essential Animations - Reduced and purposeful */
@@ -128,11 +125,26 @@ export const CSS_STYLES = `
     border-radius: 50%;
     animation: spin 1s linear infinite;
   }
+
+  .hamburger-button {
+    display: none; /* Hidden by default */
+  }
   
   /* Responsive Design */
   @media (max-width: 768px) {
     .custom-popup .leaflet-popup-content-wrapper {
       border-radius: 6px;
+    }
+    .geospatial-sidebar {
+      width: 85% !important;
+      max-width: 320px;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .geospatial-sidebar {
+      width: 320px !important;
+      max-width: 320px;
     }
   }
 `;
@@ -425,3 +437,4 @@ export const COMPONENT_STYLES = {
   textGray900: { color: '#1f2937' },
   textRed600: { color: '#dc2626' }
 };
+''

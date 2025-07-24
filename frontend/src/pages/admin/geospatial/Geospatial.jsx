@@ -38,6 +38,10 @@ function GeospatialInner() {
   });
   const [filters, setFilters] = useState(INITIAL_FILTERS);
   const [cacheStats, setCacheStats] = useState(null);
+  // Sidebar drawer state
+  const [sidebarOpen, setSidebarOpen] = useState(true);
+  // Toggle sidebar
+  const toggleSidebar = () => setSidebarOpen((open) => !open);
 
   // Initialize map
   useEffect(() => {
@@ -397,8 +401,22 @@ function GeospatialInner() {
 
   return (
     <div style={COMPONENT_STYLES.container}>
-      {/* Sidebar */}
-      <div style={COMPONENT_STYLES.sidebar} className="custom-scrollbar">
+      {/* Sidebar Drawer */}
+      <div
+        className={`custom-scrollbar geospatial-sidebar${sidebarOpen ? ' sidebar-open' : ''}`}
+        style={{
+          ...COMPONENT_STYLES.sidebar,
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          height: '100vh',
+          zIndex: 1000,
+          transition: 'transform 0.35s cubic-bezier(0.4,0,0.2,1)',
+          transform: sidebarOpen ? 'translateX(0)' : 'translateX(-100%)',
+          boxShadow: sidebarOpen ? '2px 0 8px rgba(0,0,0,0.08)' : 'none',
+        }}
+      >
+        {/* Sidebar Content */}
         <h1 style={COMPONENT_STYLES.title}>
           Taguig Geospatial
         </h1>
@@ -407,18 +425,76 @@ function GeospatialInner() {
         {renderFilters()}
         {renderStatistics()}
         {renderLegend()}
+        {/* Toggle Button - at right edge of sidebar, vertical center, only when open */}
+        {sidebarOpen && (
+          <button
+            className="drawer-toggle-btn"
+            aria-label="Close sidebar"
+            onClick={toggleSidebar}
+            style={{
+              position: 'absolute',
+              right: '-18px',
+              top: '50%',
+              transform: 'translateY(-50%)',
+              zIndex: 1101,
+              background: '#ef4444',
+              color: 'white',
+              border: 'none',
+              borderRadius: '6px 0 0 6px',
+              width: '36px',
+              height: '56px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.10)',
+              cursor: 'pointer',
+              fontSize: '1.5rem',
+              transition: 'background 0.2s',
+            }}
+          >
+            <span>&#x25C0;</span>
+          </button>
+        )}
       </div>
+      {/* Toggle Button - at left edge of screen, vertical center, only when closed */}
+      {!sidebarOpen && (
+        <button
+          className="drawer-toggle-btn"
+          aria-label="Open sidebar"
+          onClick={toggleSidebar}
+          style={{
+            position: 'fixed',
+            left: 0,
+            top: '50%',
+            transform: 'translateY(-50%)',
+            zIndex: 1101,
+            background: '#ef4444',
+            color: 'white',
+            border: 'none',
+            borderRadius: '0 6px 6px 0',
+            width: '36px',
+            height: '56px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.10)',
+            cursor: 'pointer',
+            fontSize: '1.5rem',
+            transition: 'background 0.2s',
+          }}
+        >
+          <span>&#x25B6;</span>
+        </button>
+      )}
       {/* Map Container */}
       <div style={COMPONENT_STYLES.mapContainer}>
         {renderMapOverlay()}
-        {/* Map Header */}
         {/* Leaflet Map */}
         <div 
           ref={mapRef} 
           style={COMPONENT_STYLES.leafletMap}
         />
       </div>
-      {/* Inject CSS */}
     </div>
   );
 }
