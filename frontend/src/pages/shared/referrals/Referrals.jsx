@@ -69,8 +69,8 @@ export default function ReferralsPage() {
       const token = localStorage.getItem('token');
       const userId = localStorage.getItem('userId');
       if (!token || !userId) throw new Error('Missing token or userId');
-      
-      await fetch('http://localhost:5000/api/referrals', {
+      const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+      await fetch(`${API_BASE}/referrals`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -78,14 +78,11 @@ export default function ReferralsPage() {
         },
         body: JSON.stringify({ household: beneficiaryId, program: programId, user: userId, notes: reason })
       });
-      
       setReferralError('');
       notificationService.success('Referral Submitted', 'The referral has been successfully created and is now pending review.');
-      
       // Refresh referrals list
       const updatedReferrals = await fetchReferrals();
       setReferrals(updatedReferrals);
-      
     } catch {
       const errorMsg = 'Failed to submit referral. Please check your connection and try again.';
       setReferralError(errorMsg);

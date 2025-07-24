@@ -52,9 +52,9 @@ const Dashboard = ({ role }) => {
         setLoading(false);
         return;
       }
-      const response = await axios.get('http://localhost:5000/api/households', {
-  headers: { Authorization: `Bearer ${token}` }
-});
+      const response = await axios.get(`${API_BASE_URL}/api/households`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       if (Array.isArray(response.data)) {
         setHouseholds(response.data);
       } else if (response.data && Array.isArray(response.data.households)) {

@@ -37,11 +37,12 @@ export default function AdminNavbar() {
 
   // Fetch admin info if not in localStorage
   useEffect(() => {
+    const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000';
     async function fetchAdminInfo() {
       const token = localStorage.getItem('token');
       if (!userId || !token) return;
       try {
-        const res = await axios.get(`http://localhost:5000/api/users/${userId}`,
+        const res = await axios.get(`${API_BASE}/api/users/${userId}`,
           { headers: { Authorization: `Bearer ${token}` } });
         if (res.data) {
           setUserName(res.data.name);

@@ -28,11 +28,12 @@ export default function UserNavbar() {
 
   // Fetch user info if not in localStorage
   useEffect(() => {
+    const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
     async function fetchUserInfo() {
       const token = localStorage.getItem('token');
       if (!userId || !token) return;
       try {
-        const res = await axios.get(`http://localhost:5000/api/users/${userId}`, {
+        const res = await axios.get(`${API_BASE}/users/${userId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         if (res.data) {
@@ -41,7 +42,7 @@ export default function UserNavbar() {
           localStorage.setItem('userName', res.data.name);
           localStorage.setItem('userEmail', res.data.email);
         }
-      } catch (e) {
+      } catch {
         // fallback to localStorage or dummy
         if (!userName) setUserName('User');
         if (!userEmail) setUserEmail('user@actonpov.com');

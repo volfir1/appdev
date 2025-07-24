@@ -18,13 +18,14 @@ export default function UserDashboard() {
       setLoading(true);
       const token = localStorage.getItem("token");
       try {
+        const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
         const [refRes, hhRes] = await Promise.all([
-          axios.get("http://localhost:5000/api/referrals", { headers: { Authorization: `Bearer ${token}` } }),
-          axios.get("http://localhost:5000/api/households", { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${API_BASE}/referrals`, { headers: { Authorization: `Bearer ${token}` } }),
+          axios.get(`${API_BASE}/households`, { headers: { Authorization: `Bearer ${token}` } }),
         ]);
         setReferrals(refRes.data);
         setHouseholds(hhRes.data);
-      } catch (err) {
+      } catch{
         // handle error
       } finally {
         setLoading(false);

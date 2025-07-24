@@ -5,6 +5,8 @@ import HouseholdTable from "./householdTable";
 import { DashboardCharts } from "./DashboardCharts";
 import { useNavigate } from "react-router-dom";
 
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+
 const Dashboard = ({ role }) => {
   const [households, setHouseholds] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -54,7 +56,7 @@ const Dashboard = ({ role }) => {
         return;
       }
 
-      const response = await axios.get("http://localhost:5000/api/households", {
+      const response = await axios.get(`${API_BASE}/households`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
