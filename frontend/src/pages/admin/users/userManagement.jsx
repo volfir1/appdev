@@ -44,7 +44,8 @@ export default function UserManagement() {
     fetchUsers();
     const fetchBarangays = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/barangays", {
+        const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
+        const response = await axios.get(`${API_BASE}/barangays`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
         });
         setBarangays(response.data);
