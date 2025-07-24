@@ -33,7 +33,7 @@ export default function ReferralsPage() {
       setLoading(false);
     });
     fetchHouseholds();
-  }, [fetchHouseholds]);
+  }, []); // Only run once on mount
 
   const handleStatusChange = async (id, status) => {
     setActionLoading(prev => ({ ...prev, [id]: status }));
