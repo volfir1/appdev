@@ -63,7 +63,7 @@ export default function UserDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-      <Container size="xl" className="py-12">
+      <Container size="xl" className="py-12" pt={100}>
         <Grid gutter="xl">
           {/* Main Profile Card */}
           <Grid.Col span={12}>

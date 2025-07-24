@@ -152,8 +152,8 @@ export default function UserManagement() {
 
   return (
     <div className="min-h-screen bg-rose-50">
-      <Container size="xl" className="py-4 sm:py-8 px-2 sm:px-4" mt={80}>
-        <Paper className="bg-white shadow-sm rounded-xl p-3 sm:p-6 border border-rose-100">
+      <Container size="xl" className="py-4 sm:py-8 px-2 sm:px-4" mt={30}>
+        <Paper className="bg-white shadow-sm rounded-xl p-3 sm:p-6 border border-rose-100" pt={60}>
           {/* Header Section - Stack on mobile */}
           <div className="mb-6 sm:mb-8">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
@@ -322,7 +322,6 @@ export default function UserManagement() {
         .mobile-table-container {
           width: 100%;
           position: relative;
-          overflow: hidden;
         }
 
         .table-scroll-wrapper {
@@ -335,11 +334,12 @@ export default function UserManagement() {
           border-radius: 8px;
           border: 1px solid #e2e8f0;
           background: white;
+          position: relative;
         }
 
         .table-inner-wrapper {
+          width: fit-content;
           min-width: 100%;
-          width: max-content;
         }
 
         .table-scroll-wrapper::-webkit-scrollbar {
@@ -362,7 +362,7 @@ export default function UserManagement() {
 
         .table-scroll-wrapper table {
           min-width: 800px;
-          width: max-content;
+          width: auto;
           border-collapse: collapse;
           margin: 0;
         }
@@ -377,10 +377,8 @@ export default function UserManagement() {
         /* Mobile optimizations */
         @media (max-width: 768px) {
           .table-scroll-wrapper {
-            margin: 0 -12px;
-            border-radius: 0;
-            border-left: none;
-            border-right: none;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
           }
           
           .table-scroll-wrapper table {
@@ -451,17 +449,15 @@ export default function UserManagement() {
           }
         }
 
-        /* Force horizontal scrolling on mobile */
+        /* Ensure smooth scrolling */
+        .table-scroll-wrapper {
+          scroll-behavior: smooth;
+        }
+
+        /* Fix for scroll issues on mobile */
         @media (max-width: 768px) {
           .table-scroll-wrapper {
-            touch-action: pan-x;
-          }
-          
-          .mobile-table-container {
-            position: relative;
-            width: 100vw;
-            margin-left: calc(-50vw + 50%);
-            padding: 0 1rem;
+            overscroll-behavior-x: contain;
           }
         }
       `}</style>
