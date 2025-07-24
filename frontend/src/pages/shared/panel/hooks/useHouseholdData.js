@@ -23,7 +23,8 @@ const useHouseholdData = () => {
 
   // Fetch barangay list from backend
   useEffect(() => {
-    axios.get('http://localhost:5000/api/barangays', {
+    const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+    axios.get(`${API_BASE}/barangays`, {
       headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
     })
       .then(res => {
@@ -70,7 +71,8 @@ const useHouseholdData = () => {
         setLoading(false);
         return;
       }
-      const response = await axios.get('http://localhost:5000/api/households', {
+      const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+      const response = await axios.get(`${API_BASE}/households`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (Array.isArray(response.data)) {
@@ -151,11 +153,13 @@ const useHouseholdData = () => {
           : [],
       };
       if (editingId) {
-        await axios.put(`http://localhost:5000/api/households/${editingId}`, householdData, {
+        const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+        await axios.put(`${API_BASE}/households/${editingId}`, householdData, {
           headers: { Authorization: `Bearer ${token}` },
         });
       } else {
-        await axios.post('http://localhost:5000/api/households', householdData, {
+        const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+        await axios.post(`${API_BASE}/households`, householdData, {
           headers: { Authorization: `Bearer ${token}` },
         });
       }
@@ -195,7 +199,8 @@ const useHouseholdData = () => {
         return;
       }
 
-      await axios.delete(`http://localhost:5000/api/households/${id}`, {
+      const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+      await axios.delete(`${API_BASE}/households/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -228,7 +233,8 @@ const useHouseholdData = () => {
       const formData = new FormData();
       formData.append('file', file); // Backend expects 'file' as field name
 
-      await axios.post('http://localhost:5000/api/households/upload', formData, {
+      const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+      await axios.post(`${API_BASE}/households/upload`, formData, {
         headers: { 
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'

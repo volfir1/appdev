@@ -12,7 +12,8 @@ const useDeletedHouseholds = () => {
       setError('');
       const token = localStorage.getItem('token');
       if (!token) throw new Error('No token found');
-      const res = await axios.get('http://localhost:5000/api/households?deleted=true', {
+      const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+      const res = await axios.get(`${API_BASE}/households?deleted=true`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setDeletedHouseholds(res.data);
@@ -30,7 +31,8 @@ const useDeletedHouseholds = () => {
       setError('');
       const token = localStorage.getItem('token');
       if (!token) throw new Error('No token found');
-      await axios.patch(`http://localhost:5000/api/households/${id}/recover`, {}, {
+      const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+      await axios.patch(`${API_BASE}/households/${id}/recover`, {}, {
         headers: { Authorization: `Bearer ${token}` },
       });
       // Remove from local list

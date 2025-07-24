@@ -31,8 +31,9 @@ export default function LoginPage() {
     setIsSubmitting(true);
     try {
       // Sending POST request to the API with email and password
+      const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        `${API_BASE}/auth/login`,
         { email, password }
       );
       console.log("Login response:", response.data);

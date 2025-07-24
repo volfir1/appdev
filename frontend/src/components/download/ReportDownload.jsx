@@ -22,9 +22,10 @@ function triggerDownload(blob, filename) {
  * @param {string} [pdfLabel] - Button label for PDF
  * @param {object} [buttonProps] - Extra props for buttons
  */
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
 export default function ReportDownload({
-  csvUrl = 'http://localhost:5000/api/reports/poverty/csv',
-  pdfUrl = 'http://localhost:5000/api/reports/poverty/pdf',
+  csvUrl = `${API_BASE}/reports/poverty/csv`,
+  pdfUrl = `${API_BASE}/reports/poverty/pdf`,
   csvLabel = 'Download CSV',
   pdfLabel = 'Download PDF',
   buttonProps = {},

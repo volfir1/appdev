@@ -11,12 +11,13 @@ const useProgramsData = () => {
       setLoading(true);
       try {
         const token = localStorage.getItem('token');
-        const res = await axios.get('http://localhost:5000/api/programs', {
+        const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+        const res = await axios.get(`${API_BASE}/programs`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setPrograms(res.data);
         setError('');
-      } catch (err) {
+      } catch {
         setError('Failed to fetch programs');
       } finally {
         setLoading(false);
